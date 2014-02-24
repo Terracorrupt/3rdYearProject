@@ -15,14 +15,14 @@ namespace _3rdYearProject
     class Player:Character
     {
 
-        public enum State                       { IDLE, RUNNING, JUMPING };
+        public enum State                       { IDLELEFT,IDLERIGHT, RUNNINGLEFT,RUNNINGRIGHT, JUMPINGLEFT,JUMPINGRIGHT };
         public State                            _currentState;
         private State                           _previousState;
         private Texture2D                       _playerDefaultTexture;
         public  Vector2                         _playerDefaultPosition;
         private Vector2                         _velocity;
         private Vector2                         _acceleration;
-        private Rectangle                       _playerDefaultRectangle;
+        public Rectangle                       _playerDefaultRectangle;
         private float                           _topSpeed;
         private float                           _gravity;
         private float                           _jumpSpeed;
@@ -72,17 +72,40 @@ namespace _3rdYearProject
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.Left))
                 {
-                    
-                        _acceleration.X -= .3f;
+                    //Animation stuff
+                    if (_canJump)
+                    {
+                        _currentState = State.RUNNINGLEFT;
+                    }
+
+                    _acceleration.X -= .3f;
                 }
                 else if (Keyboard.GetState().IsKeyDown(Keys.Right))
                 {
-                   
-                        _acceleration.X += .3f;
+                    //Animation stuff
+                    if (_canJump)
+                    {
+                        _currentState = State.RUNNINGRIGHT;
+                    }
+
+                    _acceleration.X += .3f;
                 }
                 else
-                    _acceleration.X = 4f * -_velocity.X;
+                {
+                    //Animation stuff
+                    if (_canJump&&(_previousState==State.RUNNINGRIGHT||_previousState==State.JUMPINGRIGHT))
+                    {
+                        _currentState = State.IDLERIGHT;
+                    }
+                    if (_canJump && (_previousState == State.RUNNINGLEFT || _previousState == State.JUMPINGLEFT))
+                    {
+                        _currentState = State.IDLELEFT;
+                    }
 
+                    _acceleration.X = 4f * -_velocity.X;
+                }
+
+                //Update Velocity
                 _velocity.X += _acceleration.X * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else
@@ -105,7 +128,6 @@ namespace _3rdYearProject
                 _canJump = false;
                 Console.WriteLine("Jumped");
             }
-
             //Gravity
             if (!_canJump)
             {
@@ -115,14 +137,30 @@ namespace _3rdYearProject
             else
                 _velocity.Y = 0;
 
+            //If we've been facing left, jump left, et cetera for right
+            if(!_canJump&&(_previousState==State.IDLELEFT||_previousState==State.RUNNINGLEFT))
+            {
+                _currentState = State.JUMPINGLEFT;
+            }
+            if (!_canJump && (_previousState == State.IDLERIGHT || _previousState == State.RUNNINGRIGHT))
+            {
+                _currentState = State.JUMPINGRIGHT;
+            }
+
             _canJump = _playerDefaultPosition.Y >= 300;
-
-
-            //Finally, Update your actual position
+            
+            //Finally, Update your actual position and state
             _playerDefaultPosition+= _velocity;
+            _previousState = _currentState;
 
-            Console.WriteLine("Acceleration: " + _acceleration.X);
-            Console.WriteLine("Velocity: " + _velocity.X);
+
+
+            //DEBUG
+
+            //Console.WriteLine("CurrentState: " + _currentState);
+            //Console.WriteLine("Position: " + _playerDefaultPosition);
+            //Console.WriteLine("Acceleration: " + _acceleration.X);
+            //Console.WriteLine("Velocity: " + _velocity.X);
             //Console.WriteLine("X: " + _playerDefaultPosition.X + " Y: " + _playerDefaultPosition.Y);
             
         }

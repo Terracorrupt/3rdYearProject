@@ -49,10 +49,10 @@ namespace _3rdYearProject
 
             e._Name = "Tommy";
 
-            if (_dao.Insert(e))
-            {
-                Console.WriteLine("Insert Successful");
-            }
+            //if (_dao.Insert(e))
+            //{
+            //    Console.WriteLine("Insert Successful");
+            //}
 
             base.Initialize();
         }

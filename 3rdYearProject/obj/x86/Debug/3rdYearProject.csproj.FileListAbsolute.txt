@@ -18,3 +18,4 @@ C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearPro
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\obj\x86\Debug\3rdYearProject.pdb
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Fonts\Squarefont.xnb
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\PlayerSprites\TempPlayer.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\PlayerSprites\debugRec.xnb

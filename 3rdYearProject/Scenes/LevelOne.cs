@@ -17,7 +17,10 @@ namespace _3rdYearProject
         GraphicsDevice                                                      _graphicsDev;
         SpriteFont                                                          _font;
         Player                                                              _player;
-
+        Camera                                                              _camera;
+        MouseState                                                          _mouseStateLastFrame;
+        Rectangle                                                           _rightBounds, _leftBounds;
+        Texture2D                                                           _debugTex;
 
         public LevelOne(Microsoft.Xna.Framework.Game game)
         {
@@ -27,7 +30,9 @@ namespace _3rdYearProject
             _content.RootDirectory = "content";
             _graphicsDev = game.GraphicsDevice;
             _spriteBatch = new SpriteBatch(_graphicsDev);
-
+            _camera = new Camera(_graphicsDev.Viewport);
+            _rightBounds = new Rectangle(_graphicsDev.Viewport.Width - 100, 0, 500, _graphicsDev.Viewport.Height);
+            _leftBounds = new Rectangle(_graphicsDev.Viewport.X-100, 0, 300, _graphicsDev.Viewport.Height);
             Initialize();
         }
 
@@ -43,6 +48,7 @@ namespace _3rdYearProject
         {
             _player.LoadContent(_content);
             _font = _content.Load<SpriteFont>("Fonts\\Squarefont");
+            _debugTex = _content.Load<Texture2D>("PlayerSprites\\debugRec");
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -51,18 +57,33 @@ namespace _3rdYearProject
                 SceneManager.GetInstance(_game).Current = SceneManager.State.MENU;
 
             _player.Update(gameTime);
+            _camera.Update();
 
-            if (_player._playerDefaultPosition.X > 668)
-                _player._playerDefaultPosition.X = 668;
-            if (_player._playerDefaultPosition.X < 0)
-                _player._playerDefaultPosition.X = 0;
+            //If We move near the edge, move the camera
+            if (_player._playerDefaultRectangle.Intersects(_rightBounds))
+            {
+                _camera.forward();
+                _rightBounds.X += 3;
+                _leftBounds.X += 3;
+            }
+            if (_player._playerDefaultRectangle.Intersects(_leftBounds))
+            {
+                _camera.backward();
+                _leftBounds.X -= 3;
+                _rightBounds.X -= 3;
+            }
+            
+            _mouseStateLastFrame = Mouse.GetState();
 
+            //Console.WriteLine("Mouse: " + _mouseStateLastFrame.X + " " + _mouseStateLastFrame.Y);
         }
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null, null, null, _camera.Transform);
             _player.Draw(_spriteBatch);
+            _spriteBatch.Draw(_debugTex,_rightBounds,Color.White);
+            _spriteBatch.Draw(_debugTex, _leftBounds, Color.White);
             _spriteBatch.DrawString(_font, "LEVEL 1", new Vector2(350, 50), Color.White);
             _spriteBatch.End();
         }
