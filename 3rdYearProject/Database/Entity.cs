@@ -11,7 +11,8 @@ namespace _3rdYearProject
     public class Entity
     {
         public ObjectId Id { get; set; }
-        public string _Name { get; set; }
+        public string Name { get; set; }
+        public int Jumps { get; set; }
     }
 
 }

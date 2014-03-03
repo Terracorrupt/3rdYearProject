@@ -19,3 +19,10 @@ C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearPro
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Fonts\Squarefont.xnb
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\PlayerSprites\TempPlayer.xnb
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\PlayerSprites\debugRec.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Backgrounds\landscape.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\PlayerSprites\sonic_idle_left.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\PlayerSprites\sonic_idle_right.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Fonts\mushroom.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\PlayerSprites\sonic_running_left.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\PlayerSprites\sonic_running_right.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\PlayerSprites\jumping.xnb

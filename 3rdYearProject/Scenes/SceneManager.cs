@@ -13,6 +13,11 @@ namespace _3rdYearProject
         private static State                         _current;
         public Scene                                _previous;
         private static Scene                        _active;
+        public DAO                                  _dao;
+        public string                               _userName;
+        string                                      _connectionString = "mongodb://localhost";          //Home PC is 192.168.1.16
+        string                                      _databaseString = "project";
+        string                                      _collectionString = "test1";
         private Microsoft.Xna.Framework.Game        _game;
 
         //Constructor
@@ -21,6 +26,18 @@ namespace _3rdYearProject
             this._game = game;
             _last = State.LOADING;
             _current = State.MENU;
+
+            _dao = new DAO();
+
+            if (_dao.setup(_connectionString, _databaseString, _collectionString))
+            {
+                Console.WriteLine("Connected to " + _databaseString + " using the " + _collectionString + " collection on " + _connectionString);
+            }
+            else
+            {
+                Console.WriteLine("Connection to " + _databaseString + " failed");
+            }
+
         }
 
         //Singelton

@@ -16,10 +16,6 @@ namespace _3rdYearProject
         //Variables
         GraphicsDeviceManager                       _graphics;
         SpriteBatch                                 _spriteBatch;
-        DAO                                         _dao;
-        string                                      _connectionString = "mongodb://localhost";          //Home PC is 192.168.1.16
-        string                                      _databaseString = "project";
-        string                                      _collectionString = "test1";
         SceneManager                                _manager;
 
         public Game1() : base()
@@ -34,25 +30,9 @@ namespace _3rdYearProject
 
         protected override void Initialize()
         {
-            _dao = new DAO();
+            //_dao = new DAO();
 
-            if (_dao.setup(_connectionString, _databaseString, _collectionString))
-            {
-                Console.WriteLine("Connected to " + _databaseString + " using the " + _collectionString + " collection on " + _connectionString);
-            }
-            else
-            {
-                Console.WriteLine("Connection to " + _databaseString + " failed");
-            }
-
-            Entity e = new Entity();
-
-            e._Name = "Tommy";
-
-            //if (_dao.Insert(e))
-            //{
-            //    Console.WriteLine("Insert Successful");
-            //}
+            
 
             base.Initialize();
         }
@@ -73,6 +53,21 @@ namespace _3rdYearProject
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            
+
+            //if (Keyboard.GetState().IsKeyDown(Keys.S))
+            //{
+
+            //    string[] key = new string[2];
+            //    string[] value = new string[2]; ;
+
+            //    key[0] = "_Name";
+            //    value[0] = "James";
+
+            //    _dao.Save(key, value);
+                
+            //}
 
             //Let the Scene Manager do it's thing
             _manager.NextScene().Update(gameTime);
