@@ -53,11 +53,10 @@ namespace _3rdYearProject
             if (_keyState.IsKeyDown(Keys.Enter) && (_inputName.login()!=""))
             {
                 string name = _inputName.login();
-                Entity e = new Entity();
-                e.Name = name;
+                
 
                 SceneManager.GetInstance(_game)._userName = name;
-                SceneManager.GetInstance(_game)._dao.Insert(e);
+                SceneManager.GetInstance(_game)._dao.Save("Name",name,0);
                 SceneManager.GetInstance(_game).Current = SceneManager.State.LEVEL1;
             }
 

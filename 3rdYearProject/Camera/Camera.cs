@@ -55,7 +55,7 @@ namespace _3rdYearProject
 
         public void forward()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.X))
+            if (Keyboard.GetState().IsKeyDown(Keys.X) || (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.X)))
             {
                 _pos.X -= 5.4f;
             }
@@ -67,7 +67,7 @@ namespace _3rdYearProject
 
         public void backward()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.X))
+            if (Keyboard.GetState().IsKeyDown(Keys.X) || (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.X)))
             {
                 _pos.X += 5.4f;
             }

@@ -84,10 +84,13 @@ namespace _3rdYearProject
             }
             else
             {
-                var UpdateDocument = new UpdateDocument
+                if (jumps > i.Jumps)
                 {
-                    { "$set", i.Jumps = jumps }
-                };
+                    var UpdateDocument = new UpdateDocument
+                    {
+                        { "$set", i.Jumps = jumps }
+                    };
+                }
 
                 _collection.Save(i);
             }

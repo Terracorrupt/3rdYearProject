@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Audio;
 
 namespace _3rdYearProject
 {
@@ -15,12 +16,15 @@ namespace _3rdYearProject
         SpriteBatch                                                         _spriteBatch;
         ContentManager                                                      _content;
         GraphicsDevice                                                      _graphicsDev;
+        LevelBuilder                                                        _levelBuilder;
         SpriteFont                                                          _font;
         Player                                                              _player;
         Camera                                                              _camera;
         MouseState                                                          _mouseStateLastFrame;
         Rectangle                                                           _rightBounds, _leftBounds, _backgroundBounds;
         Texture2D                                                           _debugTex, _backgroundTex;
+        SoundEffect                                                         _music;
+        SoundEffectInstance                                                 _musicInstance;
         
 
         public LevelOne(Microsoft.Xna.Framework.Game game)
@@ -35,6 +39,8 @@ namespace _3rdYearProject
             _rightBounds = new Rectangle(_graphicsDev.Viewport.Width - 100, 0, 500, _graphicsDev.Viewport.Height);
             _leftBounds = new Rectangle(_graphicsDev.Viewport.X-100, 0, 300, _graphicsDev.Viewport.Height);
             _backgroundBounds = new Rectangle(0, 0, _graphicsDev.Viewport.Width+100, _graphicsDev.Viewport.Height+80);
+            _levelBuilder = new LevelBuilder(_content);
+
             Initialize();
         }
 
@@ -42,8 +48,12 @@ namespace _3rdYearProject
         {
             _player = new Player();
             _player.Initialize();
+            _levelBuilder.buildLevel();
+
             LoadContent();
+
             Console.WriteLine("In Level One");
+            _musicInstance.Play();
         }
 
         public void LoadContent()
@@ -52,6 +62,9 @@ namespace _3rdYearProject
             _font = _content.Load<SpriteFont>("Fonts\\Squarefont");
             _debugTex = _content.Load<Texture2D>("PlayerSprites\\debugRec");
             _backgroundTex = _content.Load<Texture2D>("Backgrounds\\landscape");
+            _music = _content.Load<SoundEffect>("Music\\battlecity");
+
+            _musicInstance = _music.CreateInstance();
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -60,8 +73,8 @@ namespace _3rdYearProject
                 SceneManager.GetInstance(_game).Current = SceneManager.State.MENU;
 
             _player.Update(gameTime);
+            _levelBuilder.Update(gameTime, _player);
             _camera.Update();
-
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
@@ -83,7 +96,7 @@ namespace _3rdYearProject
             {
 
                 _camera.forward();
-                if (Keyboard.GetState().IsKeyDown(Keys.X))
+                if (Keyboard.GetState().IsKeyDown(Keys.X)||(GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.X)))
                 {
                     _rightBounds.X += 6;
                     _leftBounds.X += 6;
@@ -97,7 +110,7 @@ namespace _3rdYearProject
             if (_player._playerDefaultRectangle.Intersects(_leftBounds))
             {
                 _camera.backward();
-                if (Keyboard.GetState().IsKeyDown(Keys.X))
+                if (Keyboard.GetState().IsKeyDown(Keys.X) || (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.X)))
                 {
                     _rightBounds.X -= 6;
                     _leftBounds.X -= 6;
@@ -131,6 +144,7 @@ namespace _3rdYearProject
 
             _spriteBatch.DrawString(_font, "GREEN HILL ZONE", new Vector2(350, 50), Color.Yellow);
             _player.Draw(_spriteBatch);
+            _levelBuilder.Draw(_spriteBatch);
 
             _spriteBatch.End();
         }
