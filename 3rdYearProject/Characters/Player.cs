@@ -15,7 +15,7 @@ namespace _3rdYearProject
     class Player:Character
     {
 
-        public enum State                       { IDLELEFT,IDLERIGHT, RUNNINGLEFT,RUNNINGRIGHT, JUMPINGLEFT,JUMPINGRIGHT };
+        public enum State                       { IDLELEFT,IDLERIGHT, RUNNINGLEFT,RUNNINGRIGHT, JUMPINGLEFT,JUMPINGRIGHT,DEAD };
         public State                            _currentState;
         private State                           _previousState;
         private Texture2D                       _playerDefaultTexture, _playerIdleLeftTex, _playerIdleRightTex, _playerRunningLeftTex,
@@ -30,23 +30,26 @@ namespace _3rdYearProject
         private float                           _gravity;
         private float                           _jumpSpeed;
         private float                           _lastJump;
-        public bool                             _canJump;
+        public bool                             _canJump, _manualJumping;
         private bool                            _noSpamJump;
         public bool                             _isColliding;
+        public bool                             _isDead;
         public int                              _noJumps;
         public int                              _bruteCount;
-        public int                              _jumpTimer;
-        GamePadState                            _gamePadState;
+        public int                              _jumpTimer, _deadTimer;
+        public GamePadState                            _gamePadState;
+        GameTime                            _loacalGT;
 
         public override void Initialize()
         {
             _playerDefaultPosition = new Vector2(300, 300);
-            _playerIdleLeftAnim = new Animation(100, new Vector2(30, 33), 8);
-            _playerIdleRightAnim = new Animation(100, new Vector2(30, 33), 8);
-            _playerRunningLeftAnim = new Animation(100, new Vector2(36, 36), 6);
-            _playerRunningRightAnim = new Animation(100, new Vector2(36, 36), 6);
-            _jumpingAnim = new Animation(2, new Vector2(36, 36), 4);
+            _playerIdleLeftAnim = new Animation(100, new Vector2(32, 36), 6);
+            _playerIdleRightAnim = new Animation(100, new Vector2(32, 36), 6);
+            _playerRunningLeftAnim = new Animation(100, new Vector2(32, 36), 6);
+            _playerRunningRightAnim = new Animation(100, new Vector2(32, 36), 6);
+            _jumpingAnim = new Animation(2, new Vector2(34, 36), 4);
 
+            _isDead = false;
             _gravity = 15f;
             _canJump = false;
             _noJumps = 0;
@@ -56,15 +59,18 @@ namespace _3rdYearProject
         public override void LoadContent(ContentManager content)
         {
             _playerDefaultTexture = content.Load<Texture2D>("PlayerSprites//debugRec");
-            _playerIdleLeftTex = content.Load<Texture2D>("PlayerSprites//sonic_idle_left");
-            _playerIdleRightTex = content.Load<Texture2D>("PlayerSprites//sonic_idle_right");
-            _playerRunningLeftTex = content.Load<Texture2D>("PlayerSprites//sonic_running_left");
-            _playerRunningRightTex = content.Load<Texture2D>("PlayerSprites//sonic_running_right");
-            _jumpingTex = content.Load<Texture2D>("PlayerSprites//jumping");
+            _playerIdleLeftTex = content.Load<Texture2D>("PlayerSprites//darksanicidleright");
+            _playerIdleRightTex = content.Load<Texture2D>("PlayerSprites//darksanicidleleft");
+            _playerRunningLeftTex = content.Load<Texture2D>("PlayerSprites//darksanicrunningleft");
+            _playerRunningRightTex = content.Load<Texture2D>("PlayerSprites//darksanicrunningright");
+            _jumpingTex = content.Load<Texture2D>("PlayerSprites//darksanicjumping");
         }
 
         public override void Update(GameTime gameTime)
         {
+
+            _loacalGT = gameTime;
+            
             if (_currentState == State.IDLELEFT)
                 _playerIdleLeftAnim.Update();
             if (_currentState == State.IDLERIGHT)
@@ -73,11 +79,15 @@ namespace _3rdYearProject
                 _playerRunningLeftAnim.Update();
             if (_currentState == State.RUNNINGRIGHT)
                 _playerRunningRightAnim.Update();
-            if (_currentState == State.JUMPINGLEFT || _currentState == State.JUMPINGRIGHT)
+            if (_currentState == State.JUMPINGLEFT || _currentState == State.JUMPINGRIGHT || _currentState == State.DEAD)
                 _jumpingAnim.Update();
 
-            Movement(gameTime);
-            _playerDefaultRectangle = new Rectangle((int)_playerDefaultPosition.X, (int)_playerDefaultPosition.Y, 55, 53);
+
+           if (!checkIfDead(_isDead))
+           {
+                Movement(gameTime);
+                _playerDefaultRectangle = new Rectangle((int)_playerDefaultPosition.X, (int)_playerDefaultPosition.Y, 50, 53);
+           }
             
         }
 
@@ -91,7 +101,7 @@ namespace _3rdYearProject
                 spriteBatch.Draw(_playerRunningLeftTex, new Rectangle((int)_playerDefaultPosition.X, (int)_playerDefaultPosition.Y, 55, 53), _playerRunningLeftAnim.GetCurrentSprite(), Color.White);
             else if (_currentState == State.RUNNINGRIGHT)
                 spriteBatch.Draw(_playerRunningRightTex, new Rectangle((int)_playerDefaultPosition.X, (int)_playerDefaultPosition.Y, 55, 53), _playerRunningRightAnim.GetCurrentSprite(), Color.White);
-            else if (_currentState == State.JUMPINGLEFT || _currentState == State.JUMPINGRIGHT)
+            else if (_currentState == State.JUMPINGLEFT || _currentState == State.JUMPINGRIGHT || _currentState == State.DEAD)
                 spriteBatch.Draw(_jumpingTex, new Rectangle((int)_playerDefaultPosition.X, (int)_playerDefaultPosition.Y, 55, 53), _jumpingAnim.GetCurrentSprite(), Color.White);
             else
                 spriteBatch.Draw(_playerDefaultTexture, _playerDefaultRectangle, Color.Black);
@@ -104,7 +114,7 @@ namespace _3rdYearProject
             //Press X to Speed Up!
             if (Keyboard.GetState().IsKeyDown(Keys.X) || (_gamePadState.IsButtonDown(Buttons.X)))
             {
-                _topSpeed = 6f;
+                _topSpeed = 5f;
             }
             else
             {
@@ -131,7 +141,6 @@ namespace _3rdYearProject
                     {
                         _currentState = State.RUNNINGRIGHT;
                     }
-
                     _acceleration.X += .3f;
                 }
                 else
@@ -146,7 +155,7 @@ namespace _3rdYearProject
                         _currentState = State.IDLELEFT;
                     }
 
-                    _acceleration.X = 4f * -_velocity.X;
+                    _acceleration.X = 2f * -_velocity.X;
                 }
 
                 //Update Velocity
@@ -191,19 +200,7 @@ namespace _3rdYearProject
                 _noSpamJump = true;
                 _bruteCount = 0;
             }
-            //Pressure based jump
-            if (Keyboard.GetState().IsKeyUp(Keys.Z) && (_gamePadState.IsButtonUp(Buttons.A))&&!_canJump)
-            {
-                _jumpTimer++;
-                Console.WriteLine(_jumpTimer);
-                if (_playerDefaultPosition.Y < 400&&_jumpTimer>5)
-                {
-                    _jumpSpeed = 300f;
-                    _velocity.Y = _jumpSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds+1;
-                    _jumpTimer = 0;
-                }
-                    
-            }
+            
 
             //Gravity
             if (!_canJump)
@@ -244,10 +241,49 @@ namespace _3rdYearProject
             
         }
 
+        public bool checkIfDead(bool _isDead)
+        {
+            if (_isDead)
+            {
+                _currentState = State.IDLELEFT;
+                _acceleration.Y = 0;
+                _acceleration.X = 0;
+                _velocity.Y = 0;
+
+                if (_deadTimer < 10)
+                {
+                    _playerDefaultPosition.Y -= 3;
+                }
+                else
+                {
+                    _playerDefaultPosition.Y += 7;
+                }
+
+                
+
+                _deadTimer++;
+
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public void jumpHack(float f)
         {
             _canJump = _playerDefaultPosition.Y <= f;
             
         }
+
+        public void manualJump()
+        {
+            _manualJumping = true;
+            _velocity.Y = -(_jumpSpeed+200f) * (float)_loacalGT.ElapsedGameTime.TotalSeconds;
+            _canJump = false;
+        }
+
     }
 }

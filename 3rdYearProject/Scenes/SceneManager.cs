@@ -7,7 +7,7 @@ namespace _3rdYearProject
 {
     class SceneManager
     {
-        public enum State                           {LOADING, MENU, LEVEL1, EXIT};
+        public enum State                           {LOADING, MENU, LEVEL1,HIGHSCORE, EXIT};
         private static SceneManager                 _manager;
         public static State                         _last;
         private static State                         _current;
@@ -73,6 +73,14 @@ namespace _3rdYearProject
                     {
                         _active = new LevelOne(_game);
                         _last = State.LEVEL1;
+                        _previous = _active;
+                    }
+                    break;
+                case State.HIGHSCORE:
+                    if (_last != State.HIGHSCORE)
+                    {
+                        _active = new Highscores(_game);
+                        _last = State.HIGHSCORE;
                         _previous = _active;
                     }
                     break;

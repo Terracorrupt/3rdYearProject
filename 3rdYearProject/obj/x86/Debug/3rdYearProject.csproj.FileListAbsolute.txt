@@ -29,3 +29,10 @@ C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearPro
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Music\battlecity.xnb
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Tiles\tile.xnb
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\PlayerSprites\jumping2.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\PlayerSprites\darksanicidleleft.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\PlayerSprites\darksanicidleright.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\PlayerSprites\darksanicrunningleft.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\PlayerSprites\darksanicrunningright.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\PlayerSprites\darksanicjumping.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Tiles\spike.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Tiles\spring.xnb

@@ -20,7 +20,6 @@ namespace _3rdYearProject
             _database = _server.GetDatabase(databaseString);
             _collection = _database.GetCollection<Entity>(collectionString);
 
-
             //If Collection exists, then everything else must exist
             if (_collection.Exists())
             {
@@ -66,7 +65,7 @@ namespace _3rdYearProject
         }
 
         //Convert to arrays for multiple key values in future
-        public void Save(string key, string value, int jumps)
+        public void Save(string key, string value, int jumps, int minutes, int seconds)
         {
             //Construct Query
             var query = Query.EQ(key, value);
@@ -80,6 +79,8 @@ namespace _3rdYearProject
                 Entity j = new Entity();
                 j.Name = value;
                 j.Jumps = jumps;
+                j.Minutes = minutes;
+                j.Seconds = seconds;
                 Insert(j);
             }
             else
@@ -88,9 +89,25 @@ namespace _3rdYearProject
                 {
                     var UpdateDocument = new UpdateDocument
                     {
-                        { "$set", i.Jumps = jumps }
+                        { "$set", i.Jumps = jumps },
+      
                     };
                 }
+
+                if (minutes <= i.Minutes && seconds < i.Seconds)
+                {
+                    var UpdateDocument2 = new UpdateDocument
+                    {
+                        { "$set", i.Seconds = seconds }
+
+                    };
+                    var UpdateDocument3 = new UpdateDocument
+                    {
+                        { "$set", i.Minutes = minutes }
+
+                    };
+                }
+               
 
                 _collection.Save(i);
             }

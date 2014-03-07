@@ -1,0 +1,4 @@
+﻿Bug List:
+
+Database - When updating time, should only update if time entered is less than time already in the database. Problem is
+			that initial value is 0, and 

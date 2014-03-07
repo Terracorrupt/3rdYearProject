@@ -17,6 +17,10 @@ namespace _3rdYearProject
         GraphicsDeviceManager                       _graphics;
         SpriteBatch                                 _spriteBatch;
         SceneManager                                _manager;
+        KeyboardState                               _keyState;
+        KeyboardState                               _prevKeyState;
+        GamePadState                                _padState, _prevPadState;
+        public bool                                 _pauseOn;
 
         public Game1() : base()
         {
@@ -25,6 +29,7 @@ namespace _3rdYearProject
             Content.RootDirectory = "Content";
             _graphics.PreferredBackBufferWidth = 700;
 
+            _pauseOn = false;
             //_graphics.IsFullScreen = true;
         }
 
@@ -54,7 +59,8 @@ namespace _3rdYearProject
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            
+            _keyState = Keyboard.GetState();
+            _padState = GamePad.GetState(PlayerIndex.One);
 
             //if (Keyboard.GetState().IsKeyDown(Keys.S))
             //{
@@ -70,8 +76,24 @@ namespace _3rdYearProject
             //}
 
             //Let the Scene Manager do it's thing
-            _manager.NextScene().Update(gameTime);
-           
+
+            if ((_prevKeyState.IsKeyDown(Keys.P) && !_keyState.IsKeyDown(Keys.P)) || (_prevPadState.IsButtonDown(Buttons.Y) && !_padState.IsButtonDown(Buttons.Y)))
+            {
+                // The 'P' key has just been released
+                // This will only fire ONCE when the 'P' key is released
+                if (_pauseOn)
+                    _pauseOn = false;
+                else
+                    _pauseOn = true;
+            }
+
+            if(!_pauseOn)
+                _manager.NextScene().Update(gameTime);
+
+            //Console.WriteLine();
+            _prevKeyState = _keyState;
+            _prevPadState = _padState;
+
             base.Update(gameTime);
         }
 

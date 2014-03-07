@@ -13,6 +13,8 @@ namespace _3rdYearProject
         public ObjectId Id { get; set; }
         public string Name { get; set; }
         public int Jumps { get; set; }
+        public int Minutes { get; set; }
+        public int Seconds { get; set; }
     }
 
 }

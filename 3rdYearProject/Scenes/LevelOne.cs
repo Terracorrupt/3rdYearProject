@@ -25,6 +25,12 @@ namespace _3rdYearProject
         Texture2D                                                           _debugTex, _backgroundTex;
         SoundEffect                                                         _music;
         SoundEffectInstance                                                 _musicInstance;
+        int                                                                 _elapsedTimeSec;
+        int                                                                 _elapsedTimeMin;
+        int                                                                 _elapsedTimeStart;
+        GamePadState                                                        _gamePadState;
+        
+        Vector2                                                             _scorePos;
         
 
         public LevelOne(Microsoft.Xna.Framework.Game game)
@@ -40,6 +46,9 @@ namespace _3rdYearProject
             _leftBounds = new Rectangle(_graphicsDev.Viewport.X-100, 0, 300, _graphicsDev.Viewport.Height);
             _backgroundBounds = new Rectangle(0, 0, _graphicsDev.Viewport.Width+100, _graphicsDev.Viewport.Height+80);
             _levelBuilder = new LevelBuilder(_content);
+            _scorePos = new Vector2(380,20);
+
+            
 
             Initialize();
         }
@@ -52,8 +61,9 @@ namespace _3rdYearProject
 
             LoadContent();
 
+            _elapsedTimeStart = 0;
             Console.WriteLine("In Level One");
-            _musicInstance.Play();
+            //_musicInstance.Play();
         }
 
         public void LoadContent()
@@ -71,57 +81,77 @@ namespace _3rdYearProject
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Q))
                 SceneManager.GetInstance(_game).Current = SceneManager.State.MENU;
+            _gamePadState = GamePad.GetState(PlayerIndex.One);
 
             _player.Update(gameTime);
             _levelBuilder.Update(gameTime, _player);
             _camera.Update();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            //Get time since program started, minus it by total.
+            if (_elapsedTimeStart == 0)
             {
-                SceneManager.GetInstance(_game)._dao.find("Name", SceneManager.GetInstance(_game)._userName);
+                _elapsedTimeStart = gameTime.TotalGameTime.Seconds;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            _elapsedTimeSec = (gameTime.TotalGameTime.Seconds - _elapsedTimeStart) % 60;
+            _elapsedTimeMin = gameTime.TotalGameTime.Minutes;
+
+            if (_elapsedTimeSec == -_elapsedTimeStart)
             {
-
-                string key = "Name";
-                string value = SceneManager.GetInstance(_game)._userName;
-                int jumps = _player._noJumps;
-
-                SceneManager.GetInstance(_game)._dao.Save(key, value, jumps);
+                _elapsedTimeSec = 60 - _elapsedTimeStart;
             }
 
             //If We move near the edge, move the camera
             if (_player._playerDefaultRectangle.Intersects(_rightBounds))
             {
-
+                
                 _camera.forward();
-                if (Keyboard.GetState().IsKeyDown(Keys.X)||(GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.X)))
+                if (Keyboard.GetState().IsKeyDown(Keys.X)||(_gamePadState.IsButtonDown(Buttons.X)))
                 {
                     _rightBounds.X += 6;
                     _leftBounds.X += 6;
+                    _scorePos.X += 6;
                 }
                 else
                 {
                     _rightBounds.X += 4;
                     _leftBounds.X += 4;
+                    _scorePos.X += 4f;
                 }
             }
-            if (_player._playerDefaultRectangle.Intersects(_leftBounds))
+            if (_player._playerDefaultPosition.X > 500)
             {
-                _camera.backward();
-                if (Keyboard.GetState().IsKeyDown(Keys.X) || (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.X)))
+                if (_player._playerDefaultRectangle.Intersects(_leftBounds))
                 {
-                    _rightBounds.X -= 6;
-                    _leftBounds.X -= 6;
-                }
-                else
-                {
-                    _leftBounds.X -= 4;
-                    _rightBounds.X -= 4;
+                    _camera.backward();
+                    if (Keyboard.GetState().IsKeyDown(Keys.X) || (_gamePadState.IsButtonDown(Buttons.X)))
+                    {
+                        _rightBounds.X -= 6;
+                        _leftBounds.X -= 6;
+                        _scorePos.X -= 6;
+                    }
+                    else
+                    {
+                        _leftBounds.X -= 4;
+                        _rightBounds.X -= 4;
+                        _scorePos.X -= 4;
+                    }
                 }
             }
-            
+
+            if (_player._deadTimer >= 100)
+            {
+                string key = "Name";
+                string value = SceneManager.GetInstance(_game)._userName;
+                int jumps = _player._noJumps;
+                int minutes = _elapsedTimeMin;
+                int seconds = _elapsedTimeSec;
+
+                SceneManager.GetInstance(_game)._dao.Save(key, value, jumps, minutes, seconds);
+
+                SceneManager.GetInstance(_game).Current = SceneManager.State.MENU;
+            }
+
             _mouseStateLastFrame = Mouse.GetState();
 
             //Console.WriteLine("Mouse: " + _mouseStateLastFrame.X + " " + _mouseStateLastFrame.Y);
@@ -142,9 +172,11 @@ namespace _3rdYearProject
             //_spriteBatch.Draw(_debugTex, _rightBounds, Color.White);
             //_spriteBatch.Draw(_debugTex, _leftBounds, Color.White);
 
-            _spriteBatch.DrawString(_font, "GREEN HILL ZONE", new Vector2(350, 50), Color.Yellow);
-            _player.Draw(_spriteBatch);
+            //_spriteBatch.DrawString(_font, "Welcome to Bethselamin", new Vector2(350, 50), Color.Black);
+            
             _levelBuilder.Draw(_spriteBatch);
+            _player.Draw(_spriteBatch);
+            _spriteBatch.DrawString(_font, "Time: " + _elapsedTimeMin + "." +_elapsedTimeSec, _scorePos, Color.Black);
 
             _spriteBatch.End();
         }
