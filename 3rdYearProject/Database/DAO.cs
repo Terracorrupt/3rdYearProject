@@ -113,5 +113,27 @@ namespace _3rdYearProject
             }
         }
 
+        public Entity[] getHighScores()
+        {
+            //Querey Database on Minutes and Seconds
+            //Order by Minutes first, then seconds
+            //Return as array of Entities
+            Entity[] entities = new Entity[_collection.Count()];
+           
+            var query = Query.Exists("Minutes");
+
+            //var cursor = _database["test1"].Find(Query.Null);
+            var cursor = _collection.FindAs<Entity>(query).SetSortOrder(SortBy.Ascending("Minutes","Seconds"));
+            int i=0;
+
+            foreach (Entity e in cursor)
+            {
+                entities[i] = e;
+                i++;
+            }
+
+            return entities;
+        }
+
     }
 }

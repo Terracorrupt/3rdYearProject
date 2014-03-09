@@ -13,6 +13,7 @@ namespace _3rdYearProject
         private Microsoft.Xna.Framework.Game                            _game;
         private Microsoft.Xna.Framework.Graphics.IGraphicsDeviceService _service;
         SpriteBatch                                                     _spriteBatch;
+        Texture2D                                                       _textBox, _backGround;
         ContentManager                                                  _content;
         GraphicsDevice                                                  _graphicsDev;
         SpriteFont                                                      _font;
@@ -49,7 +50,9 @@ namespace _3rdYearProject
 
         public void LoadContent()
         {
-            _font = _content.Load<SpriteFont>("Fonts\\Squarefont");
+            _textBox = _content.Load<Texture2D>("Backgrounds\\textBox");
+            _font = _content.Load<SpriteFont>("Fonts\\Neuropolitical");
+            _backGround = _content.Load<Texture2D>("Backgrounds\\landscape");
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -188,16 +191,20 @@ namespace _3rdYearProject
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
             _spriteBatch.Begin();
+
+            _spriteBatch.Draw(_backGround, new Rectangle(0, 0, _graphicsDev.Viewport.Width + 100, _graphicsDev.Viewport.Height + 80), Color.White);
+            _spriteBatch.Draw(_textBox, new Rectangle(150,30,440,70), Color.Red);
+            _spriteBatch.Draw(_textBox, new Rectangle(220, 320, 250, 150), Color.White);
             _inputName.Draw(_spriteBatch);
-            _spriteBatch.DrawString(_font, "MENU", new Vector2(320, 50), Color.White);
+            _spriteBatch.DrawString(_font, "Bethselamin Time Trial", new Vector2(180, 50), Color.White);
 
             if (_loggingIn)
-                _spriteBatch.DrawString(_font, "Please enter your username", new Vector2(230, 150), Color.White);
+                _spriteBatch.DrawString(_font, "Please enter your username", new Vector2(130, 150), Color.White);
             else
             {
-                _spriteBatch.DrawString(_font, "PLAY", new Vector2(320, 350), _color1);
-                _spriteBatch.DrawString(_font, "HIGH SCORES", new Vector2(320, 380), _color2);
-                _spriteBatch.DrawString(_font, "EXIT", new Vector2(320, 410), _color3);
+                _spriteBatch.DrawString(_font, "Play", new Vector2(240, 350), _color1);
+                _spriteBatch.DrawString(_font, "High scores", new Vector2(240, 380), _color2);
+                _spriteBatch.DrawString(_font, "Exit", new Vector2(240, 410), _color3);
             }
 
             _spriteBatch.End();

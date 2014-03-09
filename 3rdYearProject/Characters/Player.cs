@@ -36,9 +36,9 @@ namespace _3rdYearProject
         public bool                             _isDead;
         public int                              _noJumps;
         public int                              _bruteCount;
-        public int                              _jumpTimer, _deadTimer;
-        public GamePadState                            _gamePadState;
-        GameTime                            _loacalGT;
+        public int                              _deadTimer;
+        public GamePadState                     _gamePadState;
+        GameTime                                _loacalGT;
 
         public override void Initialize()
         {
@@ -283,6 +283,11 @@ namespace _3rdYearProject
             _manualJumping = true;
             _velocity.Y = -(_jumpSpeed+200f) * (float)_loacalGT.ElapsedGameTime.TotalSeconds;
             _canJump = false;
+        }
+
+        public void setPosition(Vector2 v)
+        {
+            _playerDefaultPosition = v;
         }
 
     }

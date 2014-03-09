@@ -108,6 +108,11 @@ namespace _3rdYearProject
             }
             return radians;
         }
+
+        public void reset()
+        {
+            _pos = Vector2.Zero;
+        }
     }
 }
 

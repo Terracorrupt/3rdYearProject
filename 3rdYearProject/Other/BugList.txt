@@ -1,4 +1,8 @@
 ﻿Bug List:
 
-Database - When updating time, should only update if time entered is less than time already in the database. Problem is
-			that initial value is 0, and 
+Time - Need a better way of regulating time than TotalTime.elapsed, maybe define my own time Data structure.
+Collision - Still some collision errors
+LevelBuilder - Should really only return the array of rectangles for each scenario, as LevelBuilder in it's current form
+				acts more like a Level 1 class.
+Camera - Jittery when moving.
+UnloadContents on all Scenes.

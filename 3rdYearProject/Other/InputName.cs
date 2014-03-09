@@ -25,7 +25,7 @@ namespace _3rdYearProject
         {
             _tempMessage = "";
             _index = 0;
-            _font = c.Load<SpriteFont>("Fonts\\Squarefont");
+            _font = c.Load<SpriteFont>("Fonts\\Neuropolitical");
             _sb = new StringBuilder();
         }
 
@@ -399,7 +399,7 @@ namespace _3rdYearProject
 
         public void Draw(SpriteBatch s)
         {
-            s.DrawString(_font, _tempMessage,new Vector2(280,350),Color.White);
+            s.DrawString(_font, _tempMessage,new Vector2(250,350),Color.White);
         }
     }
 }
