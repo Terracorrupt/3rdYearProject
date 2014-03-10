@@ -65,7 +65,7 @@ namespace _3rdYearProject
         }
 
         //Convert to arrays for multiple key values in future
-        public void Save(string key, string value, int jumps, int minutes, int seconds)
+        public void Save(string key, string value, int jumps, int minutes, int seconds,int levelID)
         {
             //Construct Query
             var query = Query.EQ(key, value);
@@ -79,8 +79,31 @@ namespace _3rdYearProject
                 Entity j = new Entity();
                 j.Name = value;
                 j.Jumps = jumps;
-                j.Minutes = minutes;
-                j.Seconds = seconds;
+                if (levelID == 1)
+                {
+                    j.L1Minutes = minutes;
+                    j.L1Seconds = seconds;
+                }
+                else if (levelID == 2)
+                {
+                    j.L2Minutes = minutes;
+                    j.L2Seconds = seconds;
+                }
+                else if (levelID == 3)
+                {
+                    j.L3Minutes = minutes;
+                    j.L3Seconds = seconds;
+                }
+                else
+                {
+                    j.L1Minutes = 60;
+                    j.L1Seconds = 60;
+                    j.L2Minutes = 60;
+                    j.L2Seconds = 60;
+                    j.L3Minutes = 60;
+                    j.L3Seconds = 60;
+                }
+
                 Insert(j);
             }
             else
@@ -93,19 +116,53 @@ namespace _3rdYearProject
       
                     };
                 }
-
-                if (minutes <= i.Minutes && seconds < i.Seconds)
+                if (levelID == 1)
                 {
-                    var UpdateDocument2 = new UpdateDocument
+                    if (minutes <= i.L1Minutes && seconds < i.L1Seconds)
                     {
-                        { "$set", i.Seconds = seconds }
+                        var UpdateDocument2 = new UpdateDocument
+                        {
+                            { "$set", i.L1Seconds = seconds }
+
+                        };
+                        var UpdateDocument3 = new UpdateDocument
+                        {
+                            { "$set", i.L1Minutes = minutes }
+
+                        };
+                    }
+                }
+                if (levelID == 2)
+                {
+                    if (minutes <= i.L2Minutes && seconds < i.L2Seconds)
+                    {
+                        var UpdateDocument2 = new UpdateDocument
+                    {
+                        { "$set", i.L2Seconds = seconds }
 
                     };
-                    var UpdateDocument3 = new UpdateDocument
+                        var UpdateDocument3 = new UpdateDocument
                     {
-                        { "$set", i.Minutes = minutes }
+                        { "$set", i.L2Minutes = minutes }
 
                     };
+                    }
+                }
+                if (levelID == 3)
+                {
+                    if (minutes <= i.L3Minutes && seconds < i.L3Seconds)
+                    {
+                        var UpdateDocument2 = new UpdateDocument
+                    {
+                        { "$set", i.L3Seconds = seconds }
+
+                    };
+                        var UpdateDocument3 = new UpdateDocument
+                    {
+                        { "$set", i.L3Minutes = minutes }
+
+                    };
+                    }
                 }
                
 
@@ -113,17 +170,34 @@ namespace _3rdYearProject
             }
         }
 
-        public Entity[] getHighScores()
+        public Entity[] getHighScores(int levelID)
         {
             //Querey Database on Minutes and Seconds
             //Order by Minutes first, then seconds
             //Return as array of Entities
             Entity[] entities = new Entity[_collection.Count()];
-           
-            var query = Query.Exists("Minutes");
+            string levelMin="", levelSec="";
+            
 
-            //var cursor = _database["test1"].Find(Query.Null);
-            var cursor = _collection.FindAs<Entity>(query).SetSortOrder(SortBy.Ascending("Minutes","Seconds"));
+            if (levelID == 1)
+            {
+                levelMin = "L1Minutes";
+                levelSec = "L1Seconds";
+            }
+            if (levelID == 2)
+            {
+                levelMin = "L2Minutes";
+                levelSec = "L2Seconds";
+            }
+            if (levelID == 3)
+            {
+                levelMin = "L3Minutes";
+                levelSec = "L3Seconds";
+            }
+
+            var query = Query.Exists(levelMin);
+            var cursor = _collection.FindAs<Entity>(query).SetSortOrder(SortBy.Ascending(levelMin, levelSec));
+
             int i=0;
 
             foreach (Entity e in cursor)

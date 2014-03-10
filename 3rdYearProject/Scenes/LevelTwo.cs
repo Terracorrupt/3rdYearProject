@@ -55,6 +55,7 @@ namespace _3rdYearProject
         {
             _player = new Player();
             _player.Initialize();
+            _player.setPosition(new Vector2(100,600));
             _levelBuilder.buildLevel();
 
             LoadContent();
@@ -69,7 +70,7 @@ namespace _3rdYearProject
             _font = _content.Load<SpriteFont>("Fonts\\Neuropolitical");
             _debugTex = _content.Load<Texture2D>("PlayerSprites\\debugRec");
             _backgroundTex = _content.Load<Texture2D>("Backgrounds\\sunset");
-            _music = _content.Load<SoundEffect>("Music\\Clip Clop");
+            _music = _content.Load<SoundEffect>("Music\\I'm sure");
             _textBox = _content.Load<Texture2D>("Backgrounds\\textBox");
 
             _musicInstance = _music.CreateInstance();
@@ -95,7 +96,7 @@ namespace _3rdYearProject
                 int minutes = _levelTime.Minutes;
                 int seconds = _levelTime.Seconds;
 
-                SceneManager.GetInstance(_game)._dao.Save(key, value, jumps, minutes, seconds);
+                SceneManager.GetInstance(_game)._dao.Save(key, value, jumps, minutes, seconds, 2);
 
                 SceneManager.GetInstance(_game).Current = SceneManager.State.LEVEL3;
             }
@@ -149,6 +150,11 @@ namespace _3rdYearProject
             {
                 _musicInstance.Stop();
                 SceneManager.GetInstance(_game).Current = SceneManager.State.MENU;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.R))
+            {
+                _player.setPosition(new Vector2(100, 600));
             }
 
             _mouseStateLastFrame = Mouse.GetState();

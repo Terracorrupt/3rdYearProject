@@ -399,7 +399,7 @@ namespace _3rdYearProject
 
         public void Draw(SpriteBatch s)
         {
-            s.DrawString(_font, _tempMessage,new Vector2(250,350),Color.White);
+            s.DrawString(_font, _tempMessage,new Vector2(580,410),Color.White);
         }
     }
 }

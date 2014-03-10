@@ -70,7 +70,7 @@ namespace _3rdYearProject
             _font = _content.Load<SpriteFont>("Fonts\\Neuropolitical");
             _debugTex = _content.Load<Texture2D>("PlayerSprites\\debugRec");
             _backgroundTex = _content.Load<Texture2D>("Backgrounds\\night");
-            _music = _content.Load<SoundEffect>("Music\\Clip Clop");
+            _music = _content.Load<SoundEffect>("Music\\level3");
             _textBox = _content.Load<Texture2D>("Backgrounds\\textBox");
 
             _musicInstance = _music.CreateInstance();
@@ -91,13 +91,13 @@ namespace _3rdYearProject
 
                 _musicInstance.Stop();
 
-                //string key = "Name";
-                //string value = SceneManager.GetInstance(_game)._userName;
-                //int jumps = _player._noJumps;
-                //int minutes = _elapsedTimeMin;
-                //int seconds = _elapsedTimeSec;
+                string key = "Name";
+                string value = SceneManager.GetInstance(_game)._userName;
+                int jumps = _player._noJumps;
+                int minutes = _levelTime.Minutes;
+                int seconds = _levelTime.Seconds;
 
-                //SceneManager.GetInstance(_game)._dao.Save(key, value, jumps, minutes, seconds);
+                SceneManager.GetInstance(_game)._dao.Save(key, value, jumps, minutes, seconds,3);
 
                 SceneManager.GetInstance(_game).Current = SceneManager.State.MENU;
             }
@@ -154,6 +154,12 @@ namespace _3rdYearProject
             }
 
             _mouseStateLastFrame = Mouse.GetState();
+
+            if (Keyboard.GetState().IsKeyDown(Keys.R))
+            {
+                _player.setPosition(new Vector2(_player._playerDefaultPosition.X-50, _player._playerDefaultPosition.Y+50));
+                _camera.reset();
+            }
 
             //Console.WriteLine("Mouse: " + _mouseStateLastFrame.X + " " + _mouseStateLastFrame.Y);
         }

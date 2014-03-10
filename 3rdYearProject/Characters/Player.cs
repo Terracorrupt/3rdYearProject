@@ -227,7 +227,7 @@ namespace _3rdYearProject
                     _currentState = State.JUMPINGRIGHT;
             }
 
-            _canJump = _playerDefaultPosition.Y >= 400;
+            _canJump = _playerDefaultPosition.Y >= 900;
             
             //Finally, Update your actual position and state
             _playerDefaultPosition+= _velocity;

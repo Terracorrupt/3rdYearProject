@@ -24,7 +24,8 @@ namespace _3rdYearProject
         private bool                                                    _play, _exit, _highscores,_isAllowed,_isAllowed2, _loggingIn;
         private int                                                     _menuIndex;
         Color                                                           _color1, _color2,_color3;
-        SoundEffect                                                     _change, _enter;
+        SoundEffect                                                     _music, _change, _enter;
+        SoundEffectInstance _musicIns;
         
         
 
@@ -48,7 +49,8 @@ namespace _3rdYearProject
         {
             _menuIndex = 1;
             LoadContent();
-            Console.WriteLine("In Menu");
+            //Console.WriteLine("In Menu");
+            _musicIns.Play();
         }
 
         public void LoadContent()
@@ -58,6 +60,8 @@ namespace _3rdYearProject
             _backGround = _content.Load<Texture2D>("Backgrounds\\landscape");
             _change = _content.Load<SoundEffect>("SFX\\change");
             _enter = _content.Load<SoundEffect>("SFX\\enter");
+            _music = _content.Load<SoundEffect>("Music\\The Fruits of Summer");
+            _musicIns = _music.CreateInstance();
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -169,10 +173,11 @@ namespace _3rdYearProject
 
                 if (_inputName.login() != "" && ((_keyState.IsKeyDown(Keys.Enter)) || (_gamePadState.IsButtonDown(Buttons.A))))
                 {
+                    _musicIns.Stop();
                     _enter.Play();
                     string name = _inputName.login();
                     SceneManager.GetInstance(_game)._userName = name;
-                    SceneManager.GetInstance(_game)._dao.Save("Name", name, 0, 60, 60);
+                    SceneManager.GetInstance(_game)._dao.Save("Name", name, 0, 60, 60,0);
                     SceneManager.GetInstance(_game).Current = SceneManager.State.LEVEL1;
                 }
             }
@@ -182,6 +187,7 @@ namespace _3rdYearProject
             //Play
             if (_highscores && ((_keyState.IsKeyDown(Keys.Enter)) || (_gamePadState.IsButtonDown(Buttons.A))))
             {
+                _musicIns.Stop();
                 _enter.Play();
                 SceneManager.GetInstance(_game).Current = SceneManager.State.HIGHSCORE;
             }
@@ -190,6 +196,7 @@ namespace _3rdYearProject
             //Exit
             if (_exit && ((_keyState.IsKeyDown(Keys.Enter)) || (_gamePadState.IsButtonDown(Buttons.A))))
             {
+                _musicIns.Stop();
                 _enter.Play();
                 _game.Exit();
             }
@@ -204,18 +211,18 @@ namespace _3rdYearProject
             _spriteBatch.Begin();
 
             _spriteBatch.Draw(_backGround, new Rectangle(0, 0, _graphicsDev.Viewport.Width + 100, _graphicsDev.Viewport.Height + 80), Color.White);
-            _spriteBatch.Draw(_textBox, new Rectangle(150,30,440,70), Color.Red);
-            _spriteBatch.Draw(_textBox, new Rectangle(220, 320, 250, 150), Color.White);
+            _spriteBatch.Draw(_textBox, new Rectangle(450,30,440,70), Color.Red);
+            _spriteBatch.Draw(_textBox, new Rectangle(540, 370, 250, 150), Color.White);
             _inputName.Draw(_spriteBatch);
-            _spriteBatch.DrawString(_font, "Bethselamin Time Trial", new Vector2(180, 50), Color.White);
+            _spriteBatch.DrawString(_font, "Bethselamin Time Trial", new Vector2(480, 50), Color.White);
 
             if (_loggingIn)
-                _spriteBatch.DrawString(_font, "Please enter your username", new Vector2(130, 150), Color.White);
+                _spriteBatch.DrawString(_font, "Please enter your username", new Vector2(420, 150), Color.White);
             else
             {
-                _spriteBatch.DrawString(_font, "Play", new Vector2(240, 350), _color1);
-                _spriteBatch.DrawString(_font, "High scores", new Vector2(240, 380), _color2);
-                _spriteBatch.DrawString(_font, "Exit", new Vector2(240, 410), _color3);
+                _spriteBatch.DrawString(_font, "Play", new Vector2(570, 380), _color1);
+                _spriteBatch.DrawString(_font, "High scores", new Vector2(570, 420), _color2);
+                _spriteBatch.DrawString(_font, "Exit", new Vector2(570, 460), _color3);
             }
 
             _spriteBatch.End();

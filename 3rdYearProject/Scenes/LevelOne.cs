@@ -41,8 +41,8 @@ namespace _3rdYearProject
             _graphicsDev = game.GraphicsDevice;
             _spriteBatch = new SpriteBatch(_graphicsDev);
             _camera = new Camera(_graphicsDev.Viewport);
-            _rightBounds = new Rectangle(_graphicsDev.Viewport.Width - 100, 0, 500, _graphicsDev.Viewport.Height);
-            _leftBounds = new Rectangle(_graphicsDev.Viewport.X - 100, 0, 300, _graphicsDev.Viewport.Height);
+            _rightBounds = new Rectangle(_graphicsDev.Viewport.Width - 500, 0, 800, _graphicsDev.Viewport.Height);
+            _leftBounds = new Rectangle(_graphicsDev.Viewport.X - 100, 0, 500, _graphicsDev.Viewport.Height);
             _backgroundBounds = new Rectangle(0, 0, _graphicsDev.Viewport.Width + 100, _graphicsDev.Viewport.Height + 80);
             _levelBuilder = new LevelBuilder(_content, 1);
             _scorePos = new Vector2(40, 20);
@@ -89,13 +89,13 @@ namespace _3rdYearProject
 
             if (_levelBuilder.getFinished())
             {
-                //string key = "Name";
-                //string value = SceneManager.GetInstance(_game)._userName;
-                //int jumps = _player._noJumps;
-                //int minutes = _elapsedTimeMin;
-                //int seconds = _elapsedTimeSec;
+                string key = "Name";
+                string value = SceneManager.GetInstance(_game)._userName;
+                int jumps = _player._noJumps;
+                int minutes = _levelTime.Minutes;
+                int seconds = _levelTime.Seconds;
 
-                //SceneManager.GetInstance(_game)._dao.Save(key, value, jumps, minutes, seconds);
+                SceneManager.GetInstance(_game)._dao.Save(key, value, jumps, minutes, seconds,1);
 
                 _musicInstance.Stop();
                 SceneManager.GetInstance(_game).Current = SceneManager.State.LEVEL2;
@@ -149,6 +149,11 @@ namespace _3rdYearProject
                 SceneManager.GetInstance(_game).Current = SceneManager.State.MENU;
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.R))
+            {
+                _player.setPosition(new Vector2(100, 200));
+            }
+
             _mouseStateLastFrame = Mouse.GetState();
 
             //Console.WriteLine("Mouse: " + _mouseStateLastFrame.X + " " + _mouseStateLastFrame.Y);
@@ -173,8 +178,12 @@ namespace _3rdYearProject
 
             _player.Draw(_spriteBatch);
             _levelBuilder.Draw(_spriteBatch);
+
             _spriteBatch.Draw(_textBox, new Rectangle((int)_scorePos.X - 20, 10, 220, 50), Color.White);
             _spriteBatch.DrawString(_font, "Time: " + _levelTime.Minutes + "." + _levelTime.Seconds, _scorePos, Color.Black);
+
+            _spriteBatch.Draw(_textBox, new Rectangle(800, 600, 820, 70), Color.White);
+            _spriteBatch.DrawString(_font, "Press Z/A to Jump, Press X/X to go fast!!", new Vector2(840, 620), Color.Black);
 
             _spriteBatch.End();
         }
