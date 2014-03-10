@@ -26,9 +26,7 @@ namespace _3rdYearProject
         Texture2D _textBox;
         SoundEffect _music;
         SoundEffectInstance _musicInstance;
-        int _elapsedTimeSec;
-        int _elapsedTimeMin;
-        int _elapsedTimeStart;
+        TimeSpan _levelTime;
         GamePadState _gamePadState;
 
         Vector2 _scorePos;
@@ -48,6 +46,8 @@ namespace _3rdYearProject
             _backgroundBounds = new Rectangle(0, 0, _graphicsDev.Viewport.Width + 100, _graphicsDev.Viewport.Height + 80);
             _levelBuilder = new LevelBuilder(_content, 1);
             _scorePos = new Vector2(40, 20);
+            _levelTime = TimeSpan.Zero; 
+
 
             Initialize();
         }
@@ -60,9 +60,8 @@ namespace _3rdYearProject
             _levelBuilder.buildLevel();
 
             LoadContent();
-
-            _elapsedTimeStart = 0;
-            Console.WriteLine("In Level Three");
+            //_elapsedTimeStart = 0;
+            //Console.WriteLine("In Level Three");
             _musicInstance.Play();
         }
 
@@ -90,33 +89,20 @@ namespace _3rdYearProject
 
             if (_levelBuilder.getFinished())
             {
-                string key = "Name";
-                string value = SceneManager.GetInstance(_game)._userName;
-                int jumps = _player._noJumps;
-                int minutes = _elapsedTimeMin;
-                int seconds = _elapsedTimeSec;
+                //string key = "Name";
+                //string value = SceneManager.GetInstance(_game)._userName;
+                //int jumps = _player._noJumps;
+                //int minutes = _elapsedTimeMin;
+                //int seconds = _elapsedTimeSec;
 
-                SceneManager.GetInstance(_game)._dao.Save(key, value, jumps, minutes, seconds);
+                //SceneManager.GetInstance(_game)._dao.Save(key, value, jumps, minutes, seconds);
 
                 _musicInstance.Stop();
                 SceneManager.GetInstance(_game).Current = SceneManager.State.LEVEL2;
             }
 
-            //Get time since program started, minus it by total.
-            if (_elapsedTimeStart == 0)
-            {
-                _elapsedTimeStart = gameTime.TotalGameTime.Seconds;
-            }
+            _levelTime += gameTime.ElapsedGameTime;
 
-            _elapsedTimeSec = (gameTime.TotalGameTime.Seconds - _elapsedTimeStart) % 60;
-            _elapsedTimeMin = gameTime.TotalGameTime.Minutes;
-
-            if (_elapsedTimeSec == -_elapsedTimeStart)
-            {
-                _elapsedTimeSec = 60 - _elapsedTimeStart;
-            }
-
-            //If We move near the edge, move the camera
             if (_player._playerDefaultRectangle.Intersects(_rightBounds))
             {
 
@@ -153,7 +139,10 @@ namespace _3rdYearProject
                     }
                 }
             }
-
+            if (_player._isDead)
+            {
+                _musicInstance.Stop();
+            }
             if (_player._deadTimer >= 100)
             {
                 _musicInstance.Stop();
@@ -184,8 +173,8 @@ namespace _3rdYearProject
 
             _player.Draw(_spriteBatch);
             _levelBuilder.Draw(_spriteBatch);
-            _spriteBatch.Draw(_textBox, new Rectangle((int)_scorePos.X - 20, 10, 210, 50), Color.White);
-            _spriteBatch.DrawString(_font, "Time: " + _elapsedTimeMin + "." + _elapsedTimeSec, _scorePos, Color.Black);
+            _spriteBatch.Draw(_textBox, new Rectangle((int)_scorePos.X - 20, 10, 220, 50), Color.White);
+            _spriteBatch.DrawString(_font, "Time: " + _levelTime.Minutes + "." + _levelTime.Seconds, _scorePos, Color.Black);
 
             _spriteBatch.End();
         }

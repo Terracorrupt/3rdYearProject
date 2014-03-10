@@ -26,9 +26,7 @@ namespace _3rdYearProject
         Texture2D                                                           _textBox;
         SoundEffect                                                         _music;
         SoundEffectInstance                                                 _musicInstance;
-        int                                                                 _elapsedTimeSec;
-        int                                                                 _elapsedTimeMin;
-        int                                                                 _elapsedTimeStart;
+        TimeSpan                                                            _levelTime;
         GamePadState                                                        _gamePadState;
         
         Vector2                                                             _scorePos;
@@ -48,9 +46,8 @@ namespace _3rdYearProject
             _backgroundBounds = new Rectangle(0, 0, _graphicsDev.Viewport.Width+100, _graphicsDev.Viewport.Height+80);
             _levelBuilder = new LevelBuilder(_content, 2);
             _scorePos = new Vector2(40,20);
-
+            _levelTime = TimeSpan.Zero;
             
-
             Initialize();
         }
 
@@ -62,8 +59,7 @@ namespace _3rdYearProject
 
             LoadContent();
 
-            _elapsedTimeStart = 0;
-            Console.WriteLine("In Level One");
+            //Console.WriteLine("In Level One");
             _musicInstance.Play();
         }
 
@@ -72,7 +68,7 @@ namespace _3rdYearProject
             _player.LoadContent(_content);
             _font = _content.Load<SpriteFont>("Fonts\\Neuropolitical");
             _debugTex = _content.Load<Texture2D>("PlayerSprites\\debugRec");
-            _backgroundTex = _content.Load<Texture2D>("Backgrounds\\landscape");
+            _backgroundTex = _content.Load<Texture2D>("Backgrounds\\sunset");
             _music = _content.Load<SoundEffect>("Music\\Clip Clop");
             _textBox = _content.Load<Texture2D>("Backgrounds\\textBox");
 
@@ -96,27 +92,16 @@ namespace _3rdYearProject
                 string key = "Name";
                 string value = SceneManager.GetInstance(_game)._userName;
                 int jumps = _player._noJumps;
-                int minutes = _elapsedTimeMin;
-                int seconds = _elapsedTimeSec;
+                int minutes = _levelTime.Minutes;
+                int seconds = _levelTime.Seconds;
 
                 SceneManager.GetInstance(_game)._dao.Save(key, value, jumps, minutes, seconds);
 
                 SceneManager.GetInstance(_game).Current = SceneManager.State.LEVEL3;
             }
 
-            //Get time since program started, minus it by total.
-            if (_elapsedTimeStart == 0)
-            {
-                _elapsedTimeStart = gameTime.TotalGameTime.Seconds;
-            }
-
-            _elapsedTimeSec = (gameTime.TotalGameTime.Seconds - _elapsedTimeStart) % 60;
-            _elapsedTimeMin = gameTime.TotalGameTime.Minutes;
-
-            if (_elapsedTimeSec == -_elapsedTimeStart)
-            {
-                _elapsedTimeSec = 60 - _elapsedTimeStart;
-            }
+            _levelTime += gameTime.ElapsedGameTime;
+            
 
             //If We move near the edge, move the camera
             if (_player._playerDefaultRectangle.Intersects(_rightBounds))
@@ -156,6 +141,10 @@ namespace _3rdYearProject
                 }
             }
 
+            if (_player._isDead)
+            {
+                _musicInstance.Stop();
+            }
             if (_player._deadTimer >= 100)
             {
                 _musicInstance.Stop();
@@ -187,7 +176,7 @@ namespace _3rdYearProject
             _levelBuilder.Draw(_spriteBatch);
             _player.Draw(_spriteBatch);
             _spriteBatch.Draw(_textBox,new Rectangle((int)_scorePos.X-20,10,210,50),Color.White);
-            _spriteBatch.DrawString(_font, "Time: " + _elapsedTimeMin + "." +_elapsedTimeSec, _scorePos, Color.Black);
+            _spriteBatch.DrawString(_font, "Time: " + _levelTime.Minutes + "." + _levelTime.Seconds, _scorePos, Color.Black);
 
             _spriteBatch.End();
         }

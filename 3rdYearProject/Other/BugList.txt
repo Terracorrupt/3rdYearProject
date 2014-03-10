@@ -1,8 +1,8 @@
 ﻿Bug List:
 
-Time - Need a better way of regulating time than TotalTime.elapsed, maybe define my own time Data structure.
 Collision - Still some collision errors
 LevelBuilder - Should really only return the array of rectangles for each scenario, as LevelBuilder in it's current form
-				acts more like a Level 1 class.
+				acts more like a Level 1 class. Temporary Fix - Add Index into Constructor for level and switch on array of level;
 Camera - Jittery when moving.
+Fix SFX Volume and add more Music;
 UnloadContents on all Scenes.

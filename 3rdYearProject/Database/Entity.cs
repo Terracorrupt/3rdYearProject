@@ -15,7 +15,6 @@ namespace _3rdYearProject
         public int Jumps { get; set; }
         public int Minutes { get; set; }
         public int Seconds { get; set; }
-        public int Level { get; set; }
     }
 
 }

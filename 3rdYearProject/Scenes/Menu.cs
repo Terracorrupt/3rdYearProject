@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Audio;
 
 namespace _3rdYearProject
 {
@@ -23,6 +24,8 @@ namespace _3rdYearProject
         private bool                                                    _play, _exit, _highscores,_isAllowed,_isAllowed2, _loggingIn;
         private int                                                     _menuIndex;
         Color                                                           _color1, _color2,_color3;
+        SoundEffect                                                     _change, _enter;
+        
         
 
         public Menu(Microsoft.Xna.Framework.Game game)
@@ -53,6 +56,8 @@ namespace _3rdYearProject
             _textBox = _content.Load<Texture2D>("Backgrounds\\textBox");
             _font = _content.Load<SpriteFont>("Fonts\\Neuropolitical");
             _backGround = _content.Load<Texture2D>("Backgrounds\\landscape");
+            _change = _content.Load<SoundEffect>("SFX\\change");
+            _enter = _content.Load<SoundEffect>("SFX\\enter");
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -102,6 +107,7 @@ namespace _3rdYearProject
                 }
                 if (_isAllowed && ((_keyState.IsKeyUp(Keys.Down))))
                 {
+                    _change.Play();
                     _menuIndex++;
                     _isAllowed = false;
                 }
@@ -116,6 +122,7 @@ namespace _3rdYearProject
                 }
                 if (_isAllowed && ((_keyState.IsKeyUp(Keys.Up))))
                 {
+                    _change.Play();
                     _menuIndex--;
                     _isAllowed = false;
                 }
@@ -127,6 +134,7 @@ namespace _3rdYearProject
                 }
                 if (_isAllowed2 && ((_keyState.IsKeyDown(Keys.Down))))
                 {
+                    _change.Play();
                     _menuIndex++;
                     _isAllowed2 = false;
                 }
@@ -141,16 +149,16 @@ namespace _3rdYearProject
                 }
                 if (_isAllowed && ((_keyState.IsKeyUp(Keys.Up))))
                 {
+                    _change.Play();
                     _menuIndex--;
                     _isAllowed = false;
                 }
             }
 
-
             //Play
             if (_play&&(_keyState.IsKeyDown(Keys.Enter))||(_gamePadState.IsButtonDown(Buttons.A)))
             {
-
+                _enter.Play();
                 _loggingIn = true;
             }
 
@@ -161,6 +169,7 @@ namespace _3rdYearProject
 
                 if (_inputName.login() != "" && ((_keyState.IsKeyDown(Keys.Enter)) || (_gamePadState.IsButtonDown(Buttons.A))))
                 {
+                    _enter.Play();
                     string name = _inputName.login();
                     SceneManager.GetInstance(_game)._userName = name;
                     SceneManager.GetInstance(_game)._dao.Save("Name", name, 0, 60, 60);
@@ -173,6 +182,7 @@ namespace _3rdYearProject
             //Play
             if (_highscores && ((_keyState.IsKeyDown(Keys.Enter)) || (_gamePadState.IsButtonDown(Buttons.A))))
             {
+                _enter.Play();
                 SceneManager.GetInstance(_game).Current = SceneManager.State.HIGHSCORE;
             }
 
@@ -180,6 +190,7 @@ namespace _3rdYearProject
             //Exit
             if (_exit && ((_keyState.IsKeyDown(Keys.Enter)) || (_gamePadState.IsButtonDown(Buttons.A))))
             {
+                _enter.Play();
                 _game.Exit();
             }
 

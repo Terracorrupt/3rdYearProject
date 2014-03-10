@@ -37,6 +37,7 @@ namespace _3rdYearProject
         public int                              _noJumps;
         public int                              _bruteCount;
         public int                              _deadTimer;
+        SoundEffect                             _jumpSFX;
         public GamePadState                     _gamePadState;
         GameTime                                _loacalGT;
 
@@ -64,6 +65,7 @@ namespace _3rdYearProject
             _playerRunningLeftTex = content.Load<Texture2D>("PlayerSprites//darksanicrunningleft");
             _playerRunningRightTex = content.Load<Texture2D>("PlayerSprites//darksanicrunningright");
             _jumpingTex = content.Load<Texture2D>("PlayerSprites//darksanicjumping");
+            _jumpSFX = content.Load<SoundEffect>("SFX//jump");
         }
 
         public override void Update(GameTime gameTime)
@@ -178,6 +180,7 @@ namespace _3rdYearProject
             //Now for that Y Position...
             if ((Keyboard.GetState().IsKeyDown(Keys.Z)||(_gamePadState.IsButtonDown(Buttons.A))) && _canJump && _noSpamJump)
             {
+                _jumpSFX.Play();
                 _velocity.Y = -_jumpSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 _canJump = false;
                 //Console.WriteLine("Jumped");

@@ -41,3 +41,13 @@ C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearPro
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Backgrounds\textBox.xnb
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Tiles\blueTile.xnb
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Music\Clip Clop.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\SFX\death.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\SFX\spring.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\SFX\jump.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\SFX\changelevel.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\SFX\PlayerDeath.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\SFX\change.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\SFX\enter.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Backgrounds\sunset.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Backgrounds\night.xnb
+C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\SFX\pause.xnb

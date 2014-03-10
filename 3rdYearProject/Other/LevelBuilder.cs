@@ -26,6 +26,7 @@ namespace _3rdYearProject
         public const int                _tileColumns= 150;
         public float                    _tempY;
         bool                            _finished;
+        SoundEffect                     _springSFX, _deathSFX, _finishSFX;
         
 
         public LevelBuilder(ContentManager c, int levelID)
@@ -36,6 +37,9 @@ namespace _3rdYearProject
             _finish = c.Load<Texture2D>("Tiles\\finish");
             _blueTile = c.Load<Texture2D>("Tiles\\blueTile");
             _debugTex = c.Load<Texture2D>("PlayerSprites\\debugRec");
+            _springSFX = c.Load<SoundEffect>("SFX\\spring");
+            _deathSFX = c.Load<SoundEffect>("SFX\\PlayerDeath");
+            _finishSFX = c.Load<SoundEffect>("SFX\\changeLevel");
 
             _tileRectangles = new Rectangle[_tileRows, _tileColumns];
             _bottomTileBounds = new Rectangle[_tileRows, _tileColumns];
@@ -53,7 +57,6 @@ namespace _3rdYearProject
             _finished = false;
 
             _blueRecs = new Rectangle[_tileRows, _tileColumns];
-
 
             if (levelID == 1)
             {
@@ -175,6 +178,9 @@ namespace _3rdYearProject
                     //Spikes
                     if (p._playerDefaultRectangle.Intersects(_spikeTops[i, j]))
                     {
+                        if (!p._isDead)
+                            _deathSFX.Play();
+
                         p._isDead = true;
                     }
 
@@ -182,11 +188,13 @@ namespace _3rdYearProject
                     if (p._playerDefaultRectangle.Intersects(_springTops[i, j]))
                     {
                         p.manualJump();
+                        _springSFX.Play();
                     }
 
                     //Finish
                     if (p._playerDefaultRectangle.Intersects(_finishRec[i, j]))
                     {
+                        _finishSFX.Play();
                         setFinished();
                     }
 

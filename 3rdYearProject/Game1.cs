@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Audio;
 #endregion
 
 namespace _3rdYearProject
@@ -20,15 +21,16 @@ namespace _3rdYearProject
         KeyboardState                               _keyState;
         KeyboardState                               _prevKeyState;
         GamePadState                                _padState, _prevPadState;
-        public bool                                 _pauseOn;
+        public bool _pauseOn;
 
         public Game1() : base()
         {
             _graphics = new GraphicsDeviceManager(this);
             _manager = SceneManager.GetInstance(this);
             Content.RootDirectory = "Content";
-            _graphics.PreferredBackBufferWidth = 700;
-
+            //_graphics.PreferredBackBufferWidth = 700;
+            _graphics.IsFullScreen = true;
+            
             _pauseOn = false;
             //_graphics.IsFullScreen = true;
         }
@@ -36,8 +38,6 @@ namespace _3rdYearProject
         protected override void Initialize()
         {
             //_dao = new DAO();
-
-            
 
             base.Initialize();
         }
