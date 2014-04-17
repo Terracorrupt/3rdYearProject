@@ -39,7 +39,6 @@ C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearPro
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Fonts\Neuropolitical.xnb
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Backgrounds\textBox.xnb
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Tiles\blueTile.xnb
-C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Music\Clip Clop.xnb
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\SFX\death.xnb
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\SFX\spring.xnb
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\SFX\jump.xnb
@@ -50,6 +49,5 @@ C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearPro
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Backgrounds\sunset.xnb
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Backgrounds\night.xnb
 C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\SFX\pause.xnb
-C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Music\I'm sure.xnb
-C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Music\level3.xnb
-C:\Users\Padraig\Documents\Visual Studio 2010\Projects\3rdYearProject\3rdYearProject\bin\Debug\Content\Music\The Fruits of Summer.xnb
+C:\Users\Terra\Downloads\3rdYearProject\3rdYearProject\obj\x86\Debug\3rdYearProject.exe
+C:\Users\Terra\Downloads\3rdYearProject\3rdYearProject\obj\x86\Debug\3rdYearProject.pdb

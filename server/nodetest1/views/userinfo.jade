@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  a(href='/') Back
+  h1 #{userinfo.Name}
+  p. Jumps - #{userinfo.Jumps}
+  p. Level 1 Time - #{userinfo.L1Minutes}.#{userinfo.L1Seconds}
+  p. Level 2 Time - #{userinfo.L2Minutes}.#{userinfo.L2Seconds}
+  p. Level 3 Time - #{userinfo.L3Minutes}.#{userinfo.L3Seconds}
+  

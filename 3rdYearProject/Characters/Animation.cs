@@ -55,8 +55,7 @@ namespace _3rdYearProject
 
         public void SetRectangleY(int newY)
         {
-            _sprite.Y = newY;
-        }
+            _sprite.Y = newY;        }
 
         public int GetCurrentFrame()
         {

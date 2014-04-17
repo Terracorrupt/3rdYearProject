@@ -62,18 +62,6 @@ namespace _3rdYearProject
             _keyState = Keyboard.GetState();
             _padState = GamePad.GetState(PlayerIndex.One);
 
-            //if (Keyboard.GetState().IsKeyDown(Keys.S))
-            //{
-
-            //    string[] key = new string[2];
-            //    string[] value = new string[2]; ;
-
-            //    key[0] = "_Name";
-            //    value[0] = "James";
-
-            //    _dao.Save(key, value);
-                
-            //}
 
             //Let the Scene Manager do it's thing
 

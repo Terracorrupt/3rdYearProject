@@ -24,8 +24,8 @@ namespace _3rdYearProject
         private bool                                                    _play, _exit, _highscores,_isAllowed,_isAllowed2, _loggingIn;
         private int                                                     _menuIndex;
         Color                                                           _color1, _color2,_color3;
-        SoundEffect                                                     _music, _change, _enter;
-        SoundEffectInstance _musicIns;
+        SoundEffect                                                     _change, _enter;
+        //SoundEffectInstance _musicIns;
         
         
 
@@ -50,7 +50,7 @@ namespace _3rdYearProject
             _menuIndex = 1;
             LoadContent();
             //Console.WriteLine("In Menu");
-            _musicIns.Play();
+            //_musicIns.Play();
         }
 
         public void LoadContent()
@@ -60,8 +60,8 @@ namespace _3rdYearProject
             _backGround = _content.Load<Texture2D>("Backgrounds\\landscape");
             _change = _content.Load<SoundEffect>("SFX\\change");
             _enter = _content.Load<SoundEffect>("SFX\\enter");
-            _music = _content.Load<SoundEffect>("Music\\The Fruits of Summer");
-            _musicIns = _music.CreateInstance();
+            //_music = _content.Load<SoundEffect>("Music\\The Fruits of Summer");
+            //_musicIns = _music.CreateInstance();
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -173,7 +173,7 @@ namespace _3rdYearProject
 
                 if (_inputName.login() != "" && ((_keyState.IsKeyDown(Keys.Enter)) || (_gamePadState.IsButtonDown(Buttons.A))))
                 {
-                    _musicIns.Stop();
+                    //_musicIns.Stop();
                     _enter.Play();
                     string name = _inputName.login();
                     SceneManager.GetInstance(_game)._userName = name;
@@ -187,7 +187,7 @@ namespace _3rdYearProject
             //Play
             if (_highscores && ((_keyState.IsKeyDown(Keys.Enter)) || (_gamePadState.IsButtonDown(Buttons.A))))
             {
-                _musicIns.Stop();
+                //_musicIns.Stop();
                 _enter.Play();
                 SceneManager.GetInstance(_game).Current = SceneManager.State.HIGHSCORE;
             }
@@ -196,7 +196,7 @@ namespace _3rdYearProject
             //Exit
             if (_exit && ((_keyState.IsKeyDown(Keys.Enter)) || (_gamePadState.IsButtonDown(Buttons.A))))
             {
-                _musicIns.Stop();
+                //_musicIns.Stop();
                 _enter.Play();
                 _game.Exit();
             }

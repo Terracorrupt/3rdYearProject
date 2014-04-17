@@ -24,8 +24,8 @@ namespace _3rdYearProject
         Rectangle _rightBounds, _leftBounds, _backgroundBounds;
         Texture2D _debugTex, _backgroundTex;
         Texture2D _textBox;
-        SoundEffect _music;
-        SoundEffectInstance _musicInstance;
+        //SoundEffect _music;
+        //SoundEffectInstance _musicInstance;
         TimeSpan _levelTime;
         GamePadState _gamePadState;
 
@@ -62,7 +62,7 @@ namespace _3rdYearProject
             LoadContent();
             //_elapsedTimeStart = 0;
             //Console.WriteLine("In Level Three");
-            _musicInstance.Play();
+            //_musicInstance.Play();
         }
 
         public void LoadContent()
@@ -71,10 +71,10 @@ namespace _3rdYearProject
             _font = _content.Load<SpriteFont>("Fonts\\Neuropolitical");
             _debugTex = _content.Load<Texture2D>("PlayerSprites\\debugRec");
             _backgroundTex = _content.Load<Texture2D>("Backgrounds\\landscape");
-            _music = _content.Load<SoundEffect>("Music\\Clip Clop");
+            //_music = _content.Load<SoundEffect>("Music\\Clip Clop");
             _textBox = _content.Load<Texture2D>("Backgrounds\\textBox");
 
-            _musicInstance = _music.CreateInstance();
+            //_musicInstance = //_music.CreateInstance();
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -97,7 +97,7 @@ namespace _3rdYearProject
 
                 SceneManager.GetInstance(_game)._dao.Save(key, value, jumps, minutes, seconds,1);
 
-                _musicInstance.Stop();
+                //_musicInstance.Stop();
                 SceneManager.GetInstance(_game).Current = SceneManager.State.LEVEL2;
             }
 
@@ -141,11 +141,11 @@ namespace _3rdYearProject
             }
             if (_player._isDead)
             {
-                _musicInstance.Stop();
+                //_musicInstance.Stop();
             }
             if (_player._deadTimer >= 100)
             {
-                _musicInstance.Stop();
+                //_musicInstance.Stop();
                 SceneManager.GetInstance(_game).Current = SceneManager.State.MENU;
             }
 

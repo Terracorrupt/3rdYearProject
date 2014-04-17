@@ -1,0 +1,12 @@
+extends layout
+ 
+block content
+  h1. Bethselamin Time Trial
+  div.top
+    form.form-horizontal(name="loginuser",method="get",action="/userinfo")
+      label Username:  
+      input.span3(type="text", placeholder="Name", name="Name")
+      input.btn(type="submit", value="Log In")
+  a(href='/userlist') UserList
+  div.footer
+    

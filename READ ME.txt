@@ -1,0 +1,40 @@
+Project Momentum - Bethselamin Time Trial
+----
+
+A Windows Game that updates and queries a MongoDB Database.
+A Webserver that displays Game information.
+
+---
+
+To Install:
+
+1 - Download node.js, configure System Environment Variable PATH so that "node" command can be run from console.
+
+2 - Download MongoDB, configure System Environment Variable PATH so that "mongod"command can be run from console.
+
+3 - Run oalinst.exe. Install OpenAL32.
+
+4 - Execute runDatabase.bat
+
+5 - Execute runServer.bat
+
+6 - Execute runGame.bat
+
+7 - After playing the game, navigate to localhost:3000 on your web browser to see the Webserver.
+
+
+---
+
+
+HOW TO PLAY:
+
+Keyboard - 
+
+DPAD - Move Left and Right
+Z - Jump
+X - Run
+
+XBOX Controller - 
+DPAD - Move Left and Right
+A - Jump
+X - Run
